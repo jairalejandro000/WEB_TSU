@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/sevices/auth.service';
 
 
 @Component({
@@ -12,11 +13,11 @@ export class LoginComponent implements OnInit{
   loginForm : FormGroup;
   hide = true;
   user: User;
+  response: any;
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private authservice: AuthService){
     this.createForm();
   }
-
   ngOnInit(): void{
   }
 
@@ -26,8 +27,13 @@ export class LoginComponent implements OnInit{
         control.markAsTouched());
     }else{
       this.setUser();
-      console.log('sijalo');
       console.log(this.user);
+      this.authservice.LogIn(this.user).subscribe((data:any) => {
+        this.response = data;
+        console.log(this.response);
+      }, error =>
+      console.log(error)
+      );
     }
   }
 

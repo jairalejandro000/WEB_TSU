@@ -8,7 +8,7 @@ import { PagenotfoundComponent } from './components/others/pagenotfound/pagenotf
 
 const routes: Routes = [
   {path: 'Login', component: LoginComponent},
-  {path: '', redirectTo: '/Home', pathMatch: 'full'},
+  {path: '', redirectTo: '/Login', pathMatch: 'full'},
   {path: 'Home', component: HomeComponent},
   {path: 'Member/Register', component: RegistermComponent},
   {path: 'Member/Update', component: RegistermComponent},

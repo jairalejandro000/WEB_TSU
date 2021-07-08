@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registere.component.css']
 })
 export class RegistereComponent implements OnInit {
+  hide = true;
 
   constructor() { }
 

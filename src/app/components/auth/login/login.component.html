@@ -1,15 +1,21 @@
+<mat-toolbar>
+  <mat-toolbar-row>  
+    <div>
+      <img mat-button [routerLink]="'/asfhb'" class="mb-2 img" src="../../../../assets/azul-talavera-hotel-logo.png">
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 <div class="container">
   <form class="form" [formGroup]="loginForm" (ngSubmit)="logIn()" style="display: block;" autocomplete="off">
     <div class="form-container">
       <div class="mat-title" style="text-align: center;">Log In</div>
-      <img class="mb-2 img" src="../../../../assets/azul-talavera-hotel-logo.png"> 
-      <mat-form-field appearance="outline" color="fill">
+      <mat-form-field appearance="standard" color="fill">
         <mat-label>Enter your email</mat-label>
         <input matInput placeholder="azul_talavera@example.com" 
         formControlName="email"
         [class.is-invalid]="getEmailValidate()">
       </mat-form-field>
-      <mat-form-field appearance="outline" color="fill">
+      <mat-form-field appearance="standard" color="fill">
         <mat-label>Enter your password</mat-label>
         <input matInput placeholder="Enter your password" 
         formControlName="password" 
@@ -19,7 +25,7 @@
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field><br>
-      <button mat-raised-button color="primary" type="submit">Log In</button><br><br><br><br>
+      <button mat-raised-button type="submit">Log In</button><br><br><br><br>
     </div>
   </form>
 </div>
