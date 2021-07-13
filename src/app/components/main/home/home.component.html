@@ -1,14 +1,17 @@
 <div class="container">
-    <mat-card class="example-card">
-        <mat-card-content>
-            <img calss="example-header-image" src="../../../../assets/carro-de-golf.png">
-        </mat-card-content>
-    </mat-card>
-    <mat-card class="example-card">
+    <div *ngIf="hide; else elseBlock">
         <mat-card class="example-card">
             <mat-card-content>
-                <img class="example-header-image" src="../../../../assets/golf.png">
+                <img calss="example-header-image" src="../../../../assets/carro-de-golf.png">
             </mat-card-content>
+        </mat-card></div>
+    <ng-template #elseBlock>
+        <mat-card class="example-card">
+            <mat-card class="example-card">
+                <mat-card-content>
+                    <img class="example-header-image" src="../../../../assets/golf.png">
+                </mat-card-content>
+            </mat-card>
         </mat-card>
-    </mat-card>
+    </ng-template>
 </div>

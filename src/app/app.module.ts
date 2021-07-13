@@ -50,13 +50,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { LoginComponent } from './components/auth/login/login.component';
 import { HomeComponent } from './components/main/home/home.component';
 import { PagenotfoundComponent } from './components/others/pagenotfound/pagenotfound.component';
 import { RegistermComponent } from './components/admin/member/registerm/registerm.component';
 import { RegistereComponent } from './components/admin/employee/registere/registere.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 
 @NgModule({
@@ -119,9 +120,11 @@ import { RegistereComponent } from './components/admin/employee/registere/regist
     OverlayModule,
     PortalModule,
     ScrollingModule,
-    HttpClientModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

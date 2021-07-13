@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
+import { Validators, FormGroup, FormBuilder} from '@angular/forms';
+import { Router } from '@angular/router';
+import { errorMessage, successDialog } from 'src/app/functions/alerts';
 import { User } from 'src/app/models/user';
-import { AuthService } from 'src/app/sevices/auth.service';
-
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,25 +17,37 @@ export class LoginComponent implements OnInit{
   user: User;
   response: any;
 
-  constructor(private fb: FormBuilder, private authservice: AuthService){
+  constructor(private fb: FormBuilder, private authservice: AuthService, private router: Router){
     this.createForm();
   }
   ngOnInit(): void{
+    this.authservice.AuthToken().subscribe((response) => {
+      this.response = response;
+      console.log(response);
+      this.router.navigate(['/Home']);
+    }, (error: HttpErrorResponse)=>{
+      console.log(error);
+    })
   }
 
   logIn(): void{
+    this.authservice.clearStorage();
     if (this.loginForm.invalid){
       return Object.values(this.loginForm.controls).forEach(control => 
         control.markAsTouched());
     }else{
       this.setUser();
-      console.log(this.user);
-      this.authservice.LogIn(this.user).subscribe((data:any) => {
-        this.response = data;
-        console.log(this.response);
-      }, error =>
-      console.log(error)
-      );
+      this.authservice.LogIn(this.user).subscribe((response) => {
+        this.response = response;
+        console.log(response);
+        this.authservice.storageToken(response.token.token);
+        successDialog('Succesful login.').then(() => {
+          this.router.navigate(['/Home']);
+        })
+      }, (error: HttpErrorResponse)=>{
+        errorMessage('Incorrect email or password.');
+        console.log(error);
+      })
     }
   }
 
@@ -56,22 +70,8 @@ export class LoginComponent implements OnInit{
     );
   }
 
-  /*GETERRORS
-  getErrorMessageEmail() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a email';
-    }
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
-
-  getErrorMessagePassword() {
-    if (this.password.hasError('required')) {
-      return 'You must enter a password';
-    }
-  }*/
-
   setUser(): void {
-    this.user= {
+    this.user = {
       email: this.loginForm.get('email').value,
       password: this.loginForm.get('password').value
     };
