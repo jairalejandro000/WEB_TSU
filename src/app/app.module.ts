@@ -55,9 +55,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/auth/login/login.component';
 import { HomeComponent } from './components/main/home/home.component';
 import { PagenotfoundComponent } from './components/others/pagenotfound/pagenotfound.component';
-import { RegistermComponent } from './components/admin/member/registerm/registerm.component';
-import { RegistereComponent } from './components/admin/employee/registere/registere.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { EmployeeComponent } from './components/main/employee/employee.component';
 
 
 @NgModule({
@@ -66,8 +65,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     LoginComponent,
     HomeComponent,
     PagenotfoundComponent,
-    RegistermComponent,
-    RegistereComponent
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,

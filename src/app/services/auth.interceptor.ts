@@ -27,10 +27,10 @@ export class AuthInterceptor implements HttpInterceptor{
       return next.handle(reqClone).pipe(
         catchError((error: HttpErrorResponse) => throwError(this.handleError(error))));
     }else{
-      return next.handle(req);
+      return next.handle(req).pipe(
+        catchError((error: HttpErrorResponse) => throwError(this.handleError(error))));
     }
   }
-
   handleError(error: HttpErrorResponse){
     if(error.status == 401){
       this.authservice.clearStorage();

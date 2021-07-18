@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment'; 
+import { Employee } from '../models/employee';
 import { User } from '../models/user';
 
 @Injectable({
@@ -16,14 +17,30 @@ export class AuthService {
   token : any;
 
   constructor(private http: HttpClient){
-   }
-
-   AuthToken():Observable<any>{
+  }
+   
+  AuthToken():Observable<any>{
     return this.http.get(`${this.apiUrl}Auth/Token`);
   }
+  
+  isAdmin():Observable<any>{
+    return this.http.get(`${this.apiUrl}Auth/isAdmin`);
+  }
 
-   LogIn(user:User):Observable<any>{
-    return this.http.post(`${this.apiUrl}Auth/LogIn`, user);
+  isUser():Observable<any>{
+    return this.http.get(`${this.apiUrl}Auth/isUser`);
+  }
+
+  logIn(user:User):Observable<any>{
+    return this.http.post(`${this.apiUrl}Auth/logIn`, user);
+  }
+
+  createEmployee(employee:Employee):Observable<any>{
+    return this.http.post(`${this.apiUrl}Auth/createEmployee`, employee);
+  }
+
+  showAreas():Observable<any>{
+    return this.http.get(`${this.apiUrl}User/showusers`);
   }
 
   showUsers():Observable<any>{
@@ -41,13 +58,5 @@ export class AuthService {
   clearStorage(){
     localStorage.clear();
     console.log('Storage was clear');
-  }
-
-  isAdmin(){
-    
-  }
-
-  isUser(){
-
   }
 }

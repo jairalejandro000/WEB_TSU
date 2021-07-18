@@ -1,0 +1,46 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+      <img mat-button class="mb-2 img" [routerLink]="['/Home']" src="../../../../assets/azul-talavera-hotel-logo.png">
+      <button class="logoutbt" (click)="logOut()" mat-stroked-button>Log Out</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-tab-group mat-stretch-tabs dynamicHeight>
+  <mat-tab label="Create">
+    <div class="large-box mat-elevation-z4">
+      <div class="container">
+        <form class="form" [formGroup]="employeeForm" (ngSubmit)="create()" style="display: block;" autocomplete="off">
+          <div class="form-container">
+            <div class="mat-title" style="text-align: center;">Employee</div>
+            <mat-form-field appearance="standard" color="fill">
+              <mat-label>Enter the name</mat-label>
+              <input matInput placeholder="azul_talavera" 
+              formControlName="area"
+              [class.is-invalid]="getNameValidate()">
+            </mat-form-field>
+            <button mat-raised-button type="submit">Create</button><br><br><br><br>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Update">
+  </mat-tab>
+  <mat-tab label="Delete">
+    <div class="small-box mat-elevation-z4">
+      <div *ngIf="hide">
+        <div class="container">
+          <form class="form" [formGroup]="employeeForm" (ngSubmit)="create()" style="display: block;" autocomplete="off">
+            <div class="form-container">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<mat-tab-group animationDuration="1000ms">
+  <mat-tab label="Third">
+  </mat-tab>
+  <mat-tab label="Third">
+  </mat-tab>
+</mat-tab-group>

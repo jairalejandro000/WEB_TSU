@@ -23,10 +23,9 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void{
     this.authservice.AuthToken().subscribe((response) => {
       this.response = response;
-      console.log(response);
       this.router.navigate(['/Home']);
     }, (error: HttpErrorResponse)=>{
-      console.log(error);
+      console.log('Error in the auth');
     })
   }
 
@@ -37,7 +36,7 @@ export class LoginComponent implements OnInit{
         control.markAsTouched());
     }else{
       this.setUser();
-      this.authservice.LogIn(this.user).subscribe((response) => {
+      this.authservice.logIn(this.user).subscribe((response) => {
         this.response = response;
         console.log(response);
         this.authservice.storageToken(response.token.token);

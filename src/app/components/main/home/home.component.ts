@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { errorMessage, successDialog } from 'src/app/functions/alerts';
 
 @Component({
   selector: 'app-home',
@@ -11,18 +10,34 @@ import { errorMessage, successDialog } from 'src/app/functions/alerts';
 })
 export class HomeComponent implements OnInit {
   rol: string;
-  hide = false;
+  hideA = true;
+  hideB = true;
   response: any;
-
+  status: any;
   constructor(private authservice: AuthService, private router: Router) { 
   }
 
   ngOnInit(): void {
     this.authservice.AuthToken().subscribe((response) => {
       this.response = response;
-      console.log(response);
     }, (error: HttpErrorResponse)=>{
-      console.log(error);
+      console.log('Error in the auth');
     })
+    this.authservice.isAdmin().subscribe((response) => {
+      this.response = response
+    }, (error: HttpErrorResponse)=>{
+      this.hideA = false;
+      console.log('Error in the auth');
+    })
+    this.authservice.isUser().subscribe((response) => {
+      this.response = response
+    }, (error: HttpErrorResponse)=>{
+      this.hideB = false;
+      console.log('Error in the auth');
+    })
+  }
+  logOut(){
+    this.authservice.clearStorage();
+    this.ngOnInit();
   }
 }

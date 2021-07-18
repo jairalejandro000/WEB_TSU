@@ -1,17 +1,57 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <img mat-button class="mb-2 img" id="logo" src="../../../../assets/azul-talavera-hotel-logo.png">
+        <button class="logoutbt" (click)="logOut()" mat-stroked-button>Log Out</button>
+    </mat-toolbar-row>
+</mat-toolbar>
 <div class="container">
-    <div *ngIf="hide; else elseBlock">
-        <mat-card class="example-card">
-            <mat-card-content>
-                <img calss="example-header-image" src="../../../../assets/carro-de-golf.png">
-            </mat-card-content>
-        </mat-card></div>
-    <ng-template #elseBlock>
-        <mat-card class="example-card">
-            <mat-card class="example-card">
-                <mat-card-content>
-                    <img class="example-header-image" src="../../../../assets/golf.png">
-                </mat-card-content>
-            </mat-card>
-        </mat-card>
-    </ng-template>
+    <mat-grid-list *ngIf="hideB" cols="4" rowHeight="6:7" [gutterSize]="'30px'">
+        <mat-grid-tile>
+            <div matRipple>
+                <img [routerLink]="['/Member']" src="../../../../assets/golfer1.png" class="img-fluid mb-4 img">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div matRipple>
+                <img matRipple [routerLink]="['/Golf_Car']" src="../../../../assets/golf-cart.png" class="img-fluid mb-4 img">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div matRipple>
+                <img [routerLink]="['/Loan']" src="../../../../assets/birdie.png" class="img-fluid mb-4 img">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div matRipple>
+                <img [routerLink]="['/Employee']"src="../../../../assets/employees.png" class="img-fluid mb-4 img">
+            </div>
+            </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list *ngIf="hideA" cols="5" rowHeight="8:10" [gutterSize]="'20px'">
+        <mat-grid-tile>
+            <div matRipple>
+                <img [routerLink]="['/Member']" src="../../../../assets/golfer1.png" class="img-fluid mb-4 img">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div matRipple>
+                <img matRipple [routerLink]="['/Golf_Car']" src="../../../../assets/golf-cart.png" class="img-fluid mb-4 img">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div matRipple>
+                <img [routerLink]="['/Loan']" src="../../../../assets/birdie.png" class="img-fluid mb-4 img">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div matRipple>
+                <img [routerLink]="['/Employee']"src="../../../../assets/employees.png" class="img-fluid mb-4 img">
+            </div>
+            </mat-grid-tile>
+        <mat-grid-tile>
+            <div matRipple>
+                <img [routerLink]="['/Extension']" matRipple src="../../../../assets/contact-book.png" class="img-fluid mb-4 img">
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>
