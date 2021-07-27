@@ -22,13 +22,12 @@ export class LoginComponent implements OnInit{
   }
   ngOnInit(): void{
     this.authservice.AuthToken().subscribe((response) => {
-      this.response = response;
       this.router.navigate(['/Home']);
     }, (error: HttpErrorResponse)=>{
       console.log('Error in the auth');
+      console.log(error);
     })
   }
-
   logIn(): void{
     this.authservice.clearStorage();
     if (this.loginForm.invalid){
@@ -37,38 +36,33 @@ export class LoginComponent implements OnInit{
     }else{
       this.setUser();
       this.authservice.logIn(this.user).subscribe((response) => {
-        this.response = response;
-        console.log(response);
+        this.response = response.message;
         this.authservice.storageToken(response.token.token);
-        successDialog('Succesful login.').then(() => {
+        successDialog(this.response).then(() => {
           this.router.navigate(['/Home']);
         })
       }, (error: HttpErrorResponse)=>{
-        errorMessage('Incorrect email or password.');
+        errorMessage('Incorrect email or password');
         console.log(error);
       })
     }
   }
-
   createForm(): void{
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')]],
       password: ['', [Validators.required]]
     })
   }
-
   getEmailValidate(){
     return (
       this.loginForm.get('email').invalid && this.loginForm.get('email').touched
     );
   }
-
   getPasswordValidate(){
     return (
       this.loginForm.get('password').invalid && this.loginForm.get('password').touched
     );
   }
-
   setUser(): void {
     this.user = {
       email: this.loginForm.get('email').value,

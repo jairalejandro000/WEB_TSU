@@ -2,7 +2,8 @@ export interface Employee {
     name: string,
     last_name: string,
     gender: number,
-    address: string,
+    address?: string,
     number: number,
-    area_c: string
+    area?:   string,
+    area_c?: string
 }

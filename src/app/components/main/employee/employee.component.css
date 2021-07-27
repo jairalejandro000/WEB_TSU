@@ -52,19 +52,18 @@
 }
 .small-box, .large-box{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     margin: 16px;
     padding: 16px;
     border-radius: 8px;
 } 
 .small-box {
-    height: 500px;
-    width: 400px;
+    height: auto;
+    width: auto;
 }
 .large-box {
-    height: 900px;
-    width: 700px;
+    height: auto;
+    width: auto;
 }
 mat-tab-group{
     color: #181155;
@@ -80,4 +79,19 @@ mat-tab{
 }
 label{
     font-size: 2em;
+}
+.table {
+    width: 80%;
+} 
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+    text-align: justify;
+}
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+.mat-header-cell{
+    text-align: justify;
 }

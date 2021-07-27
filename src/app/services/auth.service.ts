@@ -39,12 +39,12 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}Auth/createEmployee`, employee);
   }
 
-  showAreas():Observable<any>{
-    return this.http.get(`${this.apiUrl}User/showusers`);
+  showEmployees():Observable<any>{
+    return this.http.get(`${this.apiUrl}Employee/showall`);
   }
 
-  showUsers():Observable<any>{
-    return this.http.get(`${this.apiUrl}User/showusers`);
+  showAreas():Observable<any>{
+    return this.http.get(`${this.apiUrl}Areas/showall`);
   }
 
   storageToken(token){
