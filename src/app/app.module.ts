@@ -57,6 +57,7 @@ import { HomeComponent } from './components/main/home/home.component';
 import { PagenotfoundComponent } from './components/others/pagenotfound/pagenotfound.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { EmployeeComponent } from './components/main/employee/employee.component';
+import { ExtensionComponent } from './components/main/extension/extension.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { EmployeeComponent } from './components/main/employee/employee.component
     LoginComponent,
     HomeComponent,
     PagenotfoundComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    ExtensionComponent
   ],
   imports: [
     BrowserModule,

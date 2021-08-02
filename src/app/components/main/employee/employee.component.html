@@ -8,22 +8,20 @@
   <mat-tab label="Agregar">
     <div class="large-box mat-elevation-z4">
       <div class="container">
-        <form class="form" [formGroup]="cEmployeeForm" (ngSubmit)="create()"  style="display: block;" autocomplete="off">
+        <form class="form" [formGroup]="crEmployeeForm" (ngSubmit)="create()" style="display: block;" autocomplete="off">
           <div class="form-container">
             <div class="mat-title" style="text-align: center;">Agregar</div>
             <mat-form-field appearance="standard" color="fill">
-              <mat-label>Enter the name</mat-label>
+              <mat-label>Nombre(s)</mat-label>
               <input matInput 
-              formControlName="name"
-              [class.is-invalid]="getNameValidate()">
+              formControlName="name">
             </mat-form-field>
             <mat-form-field appearance="standard" color="fill">
-              <mat-label>Enter the last name</mat-label>
+              <mat-label>Apellidos</mat-label>
               <input matInput 
-              formControlName="last_name" 
-              [class.is-invalid]="getLastNameValidate()">
+              formControlName="last_name">
             </mat-form-field>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="standard" color="fill">
               <mat-label>Género</mat-label>
               <mat-select formControlName="gender">
                 <mat-option value='1'>Masculino</mat-option>
@@ -33,38 +31,70 @@
             <mat-form-field appearance="standard" color="fill">
               <mat-label>Dirección</mat-label>
               <input matInput
-              formControlName="address"
-              [class.is-invalid]="getAddressValidate()">
+              formControlName="address">
             </mat-form-field>
             <mat-form-field appearance="standard" color="fill">
               <mat-label>Número</mat-label>
               <input matInput type="number"
-              formControlName="number" 
-              [class.is-invalid]="getNumberValidate()">
+              formControlName="number">
             </mat-form-field>
             <mat-form-field appearance="standard" color="fill">
               <mat-label>Área</mat-label>
-              <input matInput 
-              formControlName="area" 
-              [class.is-invalid]="getAreaValidate()">
+              <mat-select formControlName="area">
+                <mat-option *ngFor="let area of areas" value="{{area.codea}}">{{area.name}}</mat-option>
+              </mat-select>
             </mat-form-field>
-            <button mat-raised-button type="submit">Agregar</button><br><br><br><br>
+            <button mat-raised-button class="bt" type="submit">Agregar</button>
           </div>
         </form>
       </div>
     </div>
   </mat-tab>
   <mat-tab label="Actualizar">
-  </mat-tab>
-  <div *ngIf="hideA">
-  <mat-tab label="Eliminar">
-    <div class="small-box mat-elevation-z4">
+    <div class="medium-box mat-elevation-z4" *ngIf="clickedEmployee">
+      <div class="container">
+        <form class="form" [formGroup]="uEmployeeForm" (ngSubmit)="update()" style="display: block;" autocomplete="off">
+          <div class="form-container">
+            <div class="mat-title" style="text-align: center;">Actualizar</div>
+            <mat-form-field appearance="standard" color="fill">
+              <mat-label>{{clickedEmployee.employee}}</mat-label>
+              <input matInput
+              formControlName="codee" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="standard" color="fill">
+              <mat-label>{{clickedEmployee.name}}</mat-label>
+              <input matInput 
+              formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="standard" color="fill">
+              <mat-label>{{clickedEmployee.last_name}}</mat-label>
+              <input matInput 
+              formControlName="last_name">
+            </mat-form-field>
+            <mat-form-field appearance="standard" color="fill">
+              <mat-label>{{clickedEmployee.number}}</mat-label>
+              <input matInput
+              formControlName="number">
+            </mat-form-field>
+            <mat-form-field appearance="standard" color="fill">
+              <mat-label>{{clickedEmployee.area}}</mat-label>
+              <mat-select formControlName="area">
+                <mat-option *ngFor="let area of areas" value="{{area.codea}}">{{area.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button class="bt" type="submit">Actualizar</button>
+          </div>
+        </form>
+      </div>
     </div>
   </mat-tab>
-  </div>
 </mat-tab-group>
-<div class="container">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="table">
+    <ng-container matColumnDef="employee">
+      <th mat-header-cell *matHeaderCellDef> Empleado </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee}} </td>
+    </ng-container>
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Nombre </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -77,15 +107,25 @@
       <th mat-header-cell *matHeaderCellDef> Género </th>
       <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
     </ng-container>
-    <ng-container matColumnDef="area">
-      <th mat-header-cell *matHeaderCellDef> Área </th>
-      <td mat-cell *matCellDef="let element"> {{element.area}} </td>
-    </ng-container>
     <ng-container matColumnDef="number">
       <th mat-header-cell *matHeaderCellDef> Número </th>
       <td mat-cell *matCellDef="let element"> {{element.number}} </td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <ng-container matColumnDef="area">
+      <th mat-header-cell *matHeaderCellDef> Área </th>
+      <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="warn"
+        class="delete" (click)="delete(element.employee)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+    (click)="Employee(row)"></tr>
   </table>
 </div>
