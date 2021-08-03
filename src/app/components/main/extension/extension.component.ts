@@ -113,7 +113,7 @@ export class ExtensionComponent implements OnInit {
     this.uExtensionForm = this.fb.group({ 
       codex: ['', []],
       employee_c: ['', [Validators.required]],
-      extension: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern("^[0-9]*$")]]
+      extension: ['', []]
   })
   }
   setData(): void{
@@ -141,7 +141,7 @@ export class ExtensionComponent implements OnInit {
     this.extension = {
       codex: this.clickedExtension.extension,
       employee_c: this.uExtensionForm.get('employee_c').value,
-      extension: this.uExtensionForm.get('extension').value,
+      extension: this.clickedExtension.number,
     };
   }
   Extension(extension: Extension): void{

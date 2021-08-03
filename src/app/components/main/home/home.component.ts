@@ -14,10 +14,9 @@ export class HomeComponent implements OnInit {
   hideA = true;
   hideB = true;
   response: any;
-  status: any;
+
   constructor(private authservice: AuthService, private router: Router) { 
   }
-
   ngOnInit(): void {
     this.authToken();
     this.isAdmin();
@@ -41,7 +40,6 @@ export class HomeComponent implements OnInit {
     this.authservice.AuthToken().subscribe((response) => {
     }, (error: HttpErrorResponse)=>{
       this.router.navigate['/Login'];
-      console.log('Error in the auth');
       console.log(error);
     })
   } 

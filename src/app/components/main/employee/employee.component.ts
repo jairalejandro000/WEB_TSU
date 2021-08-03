@@ -104,8 +104,8 @@ export class EmployeeComponent implements OnInit {
   }
   crForm(): void{
     this.crEmployeeForm = this.fb.group({ 
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      last_name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      last_name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
       gender: ['', [Validators.required, Validators.maxLength(1)]],
       address: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(254)]],
       number: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern("^[0-9]*$")]],

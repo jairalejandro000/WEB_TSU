@@ -64,11 +64,11 @@
     border-radius: 8px;
 } 
 .large-box{
-    height: 630px;
+    height: 350px;
     width: auto;
 }
 .medium-box{
-    height: 560px;
+    height: 420px;
     width: auto;
 }
 mat-tab-group{
@@ -92,9 +92,6 @@ label{
 th, td{
     vertical-align:middle !important;
 }
-th{
-    text-align: center;
-}
 .mat-row, .mat-cell{
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
@@ -116,7 +113,7 @@ th{
     justify-content: center;
     border-radius:10px;
     height: 300px;
-    width: 90%;
+    width: 50%;
     overflow: auto;
 }
 .demo-row-is-clicked {
