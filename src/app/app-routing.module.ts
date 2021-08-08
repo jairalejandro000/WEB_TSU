@@ -7,6 +7,9 @@ import { PagenotfoundComponent } from './components/others/pagenotfound/pagenotf
 import { ExtensionComponent } from './components/main/extension/extension.component';
 import { GolfcarComponent } from './components/main/golfcar/golfcar.component';
 import { AreaComponent } from './components/main/area/area.component';
+import { UserComponent } from './components/main/user/user.component';
+import { LoanComponent } from './components/main/loan/loan.component';
+import { MemberComponent } from './components/main/member/member.component';
 
 const routes: Routes = [
   {path: 'Login', component: LoginComponent},
@@ -16,6 +19,9 @@ const routes: Routes = [
   {path: 'Extension', component: ExtensionComponent},
   {path: 'GolfCar', component: GolfcarComponent},
   {path: 'Area', component: AreaComponent},
+  {path: 'User', component: UserComponent},
+  {path: 'Loan', component: LoanComponent},
+  {path: 'Member', component: MemberComponent},
   {path: '**', component:PagenotfoundComponent}
 
 ];

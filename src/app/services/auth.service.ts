@@ -3,10 +3,13 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment'; 
+import { LoanComponent } from '../components/main/loan/loan.component';
 import { Area } from '../models/area';
 import { Employee } from '../models/employee';
 import { Extension } from '../models/extension';
 import { Golfcar } from '../models/golfcar';
+import { Loan } from '../models/loan';
+import { Member } from '../models/member';
 import { User } from '../models/user';
 
 @Injectable({
@@ -33,7 +36,23 @@ export class AuthService {
   logIn(user:User):Observable<any>{
     return this.http.post(`${this.apiUrl}Auth/logIn`, user);
   }
-  
+
+  createUser(user:User):Observable<any>{
+    return this.http.post(`${this.apiUrl}User/create`, user);
+  }
+  updateUser(user:User):Observable<any>{
+    return this.http.put(`${this.apiUrl}User/update/${user.codeu}`, user);
+  }
+  deleteUser(code: string):Observable<any>{
+    return this.http.delete(`${this.apiUrl}User/delete/${code}`);
+  }
+  showUsers():Observable<any>{
+    return this.http.get(`${this.apiUrl}User/showall`);
+  }
+  showUEmployees():Observable<any>{
+    return this.http.get(`${this.apiUrl}User/showEmployees`);
+  }
+
   createEmployee(employee:Employee):Observable<any>{
     return this.http.post(`${this.apiUrl}Auth/createEmployee`, employee);
   }
@@ -45,6 +64,19 @@ export class AuthService {
   }
   showEmployees():Observable<any>{
     return this.http.get(`${this.apiUrl}Employee/showall`);
+  }
+
+  createMember(member:Member):Observable<any>{
+    return this.http.post(`${this.apiUrl}Auth/createMember`, member);
+  }
+  updateMember(member:Member):Observable<any>{
+    return this.http.put(`${this.apiUrl}Member/update/${member.codem}`, member);
+  }
+  deleteMember(code: string):Observable<any>{
+    return this.http.delete(`${this.apiUrl}Member/delete/${code}`);
+  }
+  showMembers():Observable<any>{
+    return this.http.get(`${this.apiUrl}Member/showall`);
   }
 
   createExtension(extension:Extension):Observable<any>{
@@ -69,7 +101,7 @@ export class AuthService {
   deleteGolfCar(code: string):Observable<any>{
     return this.http.delete(`${this.apiUrl}GolfCar/delete/${code}`);
   }
-  showEGolfCars():Observable<any>{
+  showGolfCars():Observable<any>{
     return this.http.get(`${this.apiUrl}GolfCar/showall`);
   }
 
@@ -86,6 +118,22 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}Area/showall`);
   }
   
+  createLoan(loan:Loan):Observable<any>{
+    return this.http.post(`${this.apiUrl}Loan/create`, loan);
+  }
+  updateLoan(loan:Loan):Observable<any>{
+    return this.http.put(`${this.apiUrl}Loan/update/${loan.codel}`, loan);
+  }
+  deleteLoan(code: string):Observable<any>{
+    return this.http.delete(`${this.apiUrl}Loan/delete/${code}`);
+  }
+  showLoans():Observable<any>{
+    return this.http.get(`${this.apiUrl}Loan/showall`);
+  }
+  reportLoans():Observable<any>{
+    return this.http.get(`${this.apiUrl}Loan/report`);
+  }
+
   storageToken(token){
     localStorage.setItem('token', token);
   }

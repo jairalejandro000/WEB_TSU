@@ -25,22 +25,22 @@ export class HomeComponent implements OnInit {
   isAdmin(){
     this.authservice.isAdmin().subscribe(() => {
     }, (error: HttpErrorResponse)=>{
-      this.hideA = false;
-      console.log(error);
+      this.hideA = false
+      console.log(error)
     })
   }
   isUser(){
     this.authservice.isUser().subscribe(() => {
     }, (error: HttpErrorResponse)=>{
-      this.hideB = false;
-      console.log(error);
+      this.hideB = false
+      console.log(error)
     })
   }
   authToken(){
     this.authservice.AuthToken().subscribe((response) => {
     }, (error: HttpErrorResponse)=>{
-      this.router.navigate['/Login'];
-      console.log(error);
+      this.router.navigate(['/Login'])
+      console.log(error)
     })
   } 
   logOut(){

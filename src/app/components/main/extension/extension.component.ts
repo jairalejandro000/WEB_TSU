@@ -7,7 +7,8 @@ import { errorMessage, successDialog } from 'src/app/functions/alerts';
 import { Employee } from 'src/app/models/employee';
 import { AuthService } from 'src/app/services/auth.service';
 import { Extension } from 'src/app/models/extension';
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-extension',
@@ -22,34 +23,35 @@ export class ExtensionComponent implements OnInit {
   clickedExtension: Extension;
   employees: Employee[] = [];
   dataSource!: MatTableDataSource<Extension>;
+  dataSource_report!: MatTableDataSource<Extension>;
   displayedColumns: string[];
+  displayedColumns_report: string[];
   response: any;
-  hide = true;
   constructor(private fb: FormBuilder, private authservice: AuthService, private router: Router){
     this.crForm();
     this.uForm();
   }
   ngOnInit(): void{
-    this.getExtensionsData();
-    this.getEmployeesData();
     this.authToken();
     this.isAdmin();
+    this.getExtensionsData();
+    this.getEmployeesData();
+    this.displayedColumns_report = ['extension', 'employee', 'number', 'area'];
   }
   isAdmin(){
     this.authservice.isAdmin().subscribe(() => {
-      this.displayedColumns = ['extension', 'employee', 'number', 'area', 'delete'];
+      this.displayedColumns = ['extension', 'employee', 'number', 'area', 'delete']
     }, (error: HttpErrorResponse)=>{
-      this.hide = false;
-      this.displayedColumns = ['extension', 'employee', 'number', 'area'];
-      console.log(error);
+      this.router.navigate(['/Login'])
+      console.log(error)
     })
   }
   authToken(){
     this.authservice.AuthToken().subscribe(() => {
     }, (error: HttpErrorResponse)=>{
-      this.router.navigate['/Login'];
-      console.log('Error in the auth');
-      console.log(error);
+      this.router.navigate(['/Login'])
+      console.log('Error in the auth')
+      console.log(error)
     })
   } 
   create(): void{
@@ -92,6 +94,29 @@ export class ExtensionComponent implements OnInit {
       console.log(error);
     })
   }
+  report(){
+    const DATA = document.getElementById('report');
+    const doc = new jsPDF('p', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas(DATA, options).then((canvas) => {
+      const img = canvas.toDataURL('image/PNG');
+      // Add image Canvas to PDF
+      const bufferX = 15;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      successDialog('Reporte creado correctamente').then(() => {
+        docResult.save(`reporte__extensiones_${new Date().toISOString()}.pdf`);
+      })
+    });
+  }
   logOut(){
     this.authservice.clearStorage();
     this.ngOnInit();
@@ -119,6 +144,8 @@ export class ExtensionComponent implements OnInit {
   setData(): void{
     this.dataSource = new MatTableDataSource();
     this.dataSource.data = this.extensions;
+    this.dataSource_report = new MatTableDataSource();
+    this.dataSource_report.data = this.extensions;
   }
   getExtensionsData(): void{
     this.authservice.showExtensions().subscribe((response)=>{

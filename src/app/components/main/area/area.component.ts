@@ -20,31 +20,29 @@ export class AreaComponent implements OnInit {
   dataSource!: MatTableDataSource<Area>;
   displayedColumns: string[];
   response: any;
-  hide = true;
   constructor(private fb: FormBuilder, private authservice: AuthService, private router: Router){
     this.crForm();
     this.uForm();
   }
   ngOnInit(): void{
-    this.getAreaData();
     this.authToken();
     this.isAdmin();
+    this.getAreaData();
   }
   isAdmin(){
     this.authservice.isAdmin().subscribe(() => {
-      this.displayedColumns = ['area', 'name', 'description', 'delete'];
+      this.displayedColumns = ['area', 'name', 'description', 'delete']
     }, (error: HttpErrorResponse)=>{
-      this.hide = false;
-      this.displayedColumns = ['area', 'name', 'description'];
-      console.log(error);
+      this.router.navigate(['/Home'])
+      console.log(error)
     })
   }
   authToken(){
     this.authservice.AuthToken().subscribe(() => {
     }, (error: HttpErrorResponse)=>{
-      this.router.navigate['/Login'];
-      console.log('Error in the auth');
-      console.log(error);
+      this.router.navigate(['/Login'])
+      console.log('Error in the auth')
+      console.log(error)
     })
   } 
   create(): void{

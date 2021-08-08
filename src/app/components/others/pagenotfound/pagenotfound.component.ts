@@ -17,10 +17,11 @@ export class PagenotfoundComponent implements OnInit {
   }
   authToken(){
     this.authservice.AuthToken().subscribe(() => {
+      this.router.navigate(['/Home'])
     }, (error: HttpErrorResponse)=>{
-      this.router.navigate['/Login'];
-      console.log('Error in the auth');
-      console.log(error);
+      this.router.navigate(['/Login'])
+      console.log('Error in the auth')
+      console.log(error)
     })
   } 
 }

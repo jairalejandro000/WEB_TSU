@@ -60,6 +60,9 @@ import { EmployeeComponent } from './components/main/employee/employee.component
 import { ExtensionComponent } from './components/main/extension/extension.component';
 import { GolfcarComponent } from './components/main/golfcar/golfcar.component';
 import { AreaComponent } from './components/main/area/area.component';
+import { UserComponent } from './components/main/user/user.component';
+import { LoanComponent } from './components/main/loan/loan.component';
+import { MemberComponent } from './components/main/member/member.component';
 
 
 @NgModule({
@@ -71,7 +74,10 @@ import { AreaComponent } from './components/main/area/area.component';
     EmployeeComponent,
     ExtensionComponent,
     GolfcarComponent,
-    AreaComponent
+    AreaComponent,
+    UserComponent,
+    LoanComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,

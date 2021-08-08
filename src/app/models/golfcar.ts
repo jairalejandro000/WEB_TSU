@@ -3,6 +3,7 @@ export interface Golfcar {
     status?: string,
     color?: string,
     model?: string,
-    details?: number,
-    year?: number
+    details?: string,
+    year?: number,
+    number?: number
 }

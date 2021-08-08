@@ -1,26 +1,26 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Golfcar } from 'src/app/models/golfcar';
 import { errorMessage, successDialog } from 'src/app/functions/alerts';
-import { Area } from 'src/app/models/area';
-import { Employee } from 'src/app/models/employee';
 import { AuthService } from 'src/app/services/auth.service';
+import { Member } from 'src/app/models/member';
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  selector: 'app-member',
+  templateUrl: './member.component.html',
+  styleUrls: ['./member.component.css']
 })
-export class EmployeeComponent implements OnInit {
-  crEmployeeForm : FormGroup;
-  uEmployeeForm : FormGroup;
-  employee: Employee;
-  employees: Employee[] = [];
-  clickedEmployee: Employee;
-  areas: Area[] = [];
-  dataSource!: MatTableDataSource<Employee>;
+export class MemberComponent implements OnInit {
+  crMemberForm : FormGroup;
+  uMemberForm : FormGroup;
+  member: Member;
+  members: Member[] = [];
+  golfcars: Golfcar[] = [];
+  clickedMember: Member;
+  dataSource!: MatTableDataSource<Member>;
   displayedColumns: string[];
   response: any;
   constructor(private fb: FormBuilder, private authservice: AuthService, private router: Router){
@@ -30,14 +30,14 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void{
     this.authToken();
     this.isAdmin();
-    this.getEmployeesData();
-    this.getAreasData();
+    this.getMembersData();
+    this.getGolfCarData();
   }
   isAdmin(){
     this.authservice.isAdmin().subscribe(() => {
-      this.displayedColumns = ['employee', 'name', 'last_name', 'gender', 'area', 'number','delete']
+      this.displayedColumns = ['member', 'name', 'last_name', 'gender', 'number', 'golfcar', 'delete']
     }, (error: HttpErrorResponse)=>{
-      this.displayedColumns = ['employee', 'name', 'last_name', 'gender', 'area', 'number']
+      this.displayedColumns = ['member', 'name', 'last_name', 'gender', 'number', 'golfcar']
       console.log(error)
     })
   }
@@ -50,16 +50,16 @@ export class EmployeeComponent implements OnInit {
     })
   } 
   create(): void{
-    if(this.crEmployeeForm.invalid){
-      return Object.values(this.crEmployeeForm.controls).forEach(control => 
+    if(this.crMemberForm.invalid){
+      return Object.values(this.crMemberForm.controls).forEach(control => 
         control.markAsTouched());
     }else{
-      this.setcrEmployee();
-      this.authservice.createEmployee(this.employee).subscribe((response) => {
+      this.setcrMember();
+      this.authservice.createMember(this.member).subscribe((response) => {
         this.response = response.message;
         successDialog(this.response).then(() => {
         })
-        this.clearForm(this.crEmployeeForm);
+        this.clearForm(this.crMemberForm);
       }, (error: HttpErrorResponse)=>{
         errorMessage('Incorrect data');
         console.log(error);
@@ -67,19 +67,19 @@ export class EmployeeComponent implements OnInit {
     }
   }
   update(): void{
-    this.setupdEmployee();
-    this.authservice.updateEmployee(this.employee).subscribe((response) => {
+    this.setupdMember();
+    this.authservice.updateMember(this.member).subscribe((response) => {
       this.response = response.message;
       successDialog(this.response).then(() => {
       })
-      this.clearForm(this.uEmployeeForm);
+      this.clearForm(this.crMemberForm);
     }, (error: HttpErrorResponse)=>{
       errorMessage('Incorrect data');
       console.log(error);
     })
   }
   delete(code: string){
-    this.authservice.deleteEmployee(code).subscribe((response) => {
+    this.authservice.deleteMember(code).subscribe((response) => {
       this.response = response.message;
       successDialog(this.response).then(() => {
       })
@@ -101,59 +101,59 @@ export class EmployeeComponent implements OnInit {
     this.ngOnInit();
   }
   crForm(): void{
-    this.crEmployeeForm = this.fb.group({ 
+    this.crMemberForm = this.fb.group({ 
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       last_name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
       gender: ['', [Validators.required, Validators.maxLength(1)]],
       address: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(254)]],
       number: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern("^[0-9]*$")]],
-      area: ['', [Validators.required, Validators.maxLength(10)]]
+      golfcar: ['', [Validators.required, Validators.maxLength(10)]]
     })
   }
   uForm(): void{
-    this.uEmployeeForm = this.fb.group({ 
-      codee: ['', []],
+    this.uMemberForm = this.fb.group({ 
+      codem: ['', []],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       last_name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       number: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern("^[0-9]*$")]],
-      area: ['', [Validators.required, Validators.maxLength(10)]]
+      golfcar: ['', [Validators.required, Validators.maxLength(10)]]
   })
   }
   setData(): void{
     this.dataSource = new MatTableDataSource();
-    this.dataSource.data = this.employees;
+    this.dataSource.data = this.members;
   }
-  getEmployeesData(): void{
-    this.authservice.showEmployees().subscribe((response)=>{
-      this.employees = response.Employees
+  getMembersData(): void{
+    this.authservice.showMembers().subscribe((response)=>{
+      this.members = response.Members
       this.setData();
     })
   }
-  getAreasData(): void{
-    this.authservice.showAreas().subscribe((response)=>{
-      this.areas = response.Areas;
+  getGolfCarData(): void{
+    this.authservice.showGolfCars().subscribe((response)=>{
+      this.golfcars = response.GolfCars
     })
   }
-  setcrEmployee(): void{
-    this.employee = {
-      name: this.crEmployeeForm.get('name').value,
-      last_name: this.crEmployeeForm.get('last_name').value,
-      gender: this.crEmployeeForm.get('gender').value,
-      address: this.crEmployeeForm.get('address').value,
-      number: this.crEmployeeForm.get('number').value,
-      area_c: this.crEmployeeForm.get('area').value
+  setcrMember(): void{
+    this.member = {
+      name: this.crMemberForm.get('name').value,
+      last_name: this.crMemberForm.get('last_name').value,
+      gender: this.crMemberForm.get('gender').value,
+      address: this.crMemberForm.get('address').value,
+      number: this.crMemberForm.get('number').value,
+      golf_car_c: this.crMemberForm.get('golfcar').value
     };
   }
-  setupdEmployee(): void{
-    this.employee = {
-      codee: this.clickedEmployee.employee,
-      name: this.uEmployeeForm.get('name').value,
-      last_name: this.uEmployeeForm.get('last_name').value,
-      number: this.uEmployeeForm.get('number').value,
-      area_c: this.uEmployeeForm.get('area').value
+  setupdMember(): void{
+    this.member = {
+      codem: this.clickedMember.member,
+      name: this.uMemberForm.get('name').value,
+      last_name: this.uMemberForm.get('last_name').value,
+      number: this.uMemberForm.get('number').value,
+      golf_car_c: this.uMemberForm.get('golfcar').value
     };
   }
-  Employee(employee: Employee): void{
-    this.clickedEmployee = employee;
+  Member(member: Member): void{
+    this.clickedMember = member;
   }
 }

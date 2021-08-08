@@ -50,7 +50,7 @@
 }
 .mat-toolbar{
     width: 100%;
-    height: 17%;
+    height: 15%;
 }
 .large-box, .medium-box{
     margin-top: 30px;
@@ -64,11 +64,11 @@
     border-radius: 8px;
 } 
 .large-box{
-    height: 350px;
+    height: auto;
     width: auto;
 }
 .medium-box{
-    height: 420px;
+    height: autos;
     width: auto;
 }
 mat-tab-group{
